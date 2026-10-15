@@ -36,6 +36,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5001;
 mongoose
-  .connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/luxe-interiors')
+  .connect(process.env.MONGO_URI || 'mongodb+srv://saig6056_db_user:uTxhGnWrgRIYpUbj@cluster0.rze6oyy.mongodb.net/luxe-interiors')
   .then(() => app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`)))
   .catch((e) => { console.error('MongoDB connection failed:', e.message); process.exit(1); });
