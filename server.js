@@ -10,8 +10,15 @@ const Testimonial = require('./models/Testimonial');
 const crud = require('./routes/crud');
 
 const app = express();
+
+// ✅ Allow requests from any origin or your Vercel frontend URL
 app.use(cors({ origin: process.env.CLIENT_URL || true }));
 app.use(express.json({ limit: '1mb' }));
+
+// ✅ Added a base root route so you can test it directly in your browser
+app.get('/', (req, res) => {
+  res.send('Interior Backend API is running successfully!');
+});
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 app.use('/api/auth', require('./routes/auth'));
@@ -22,12 +29,7 @@ app.use('/api/enquiries', require('./routes/enquiries'));
 app.use('/api/stats', require('./routes/stats'));
 app.use('/api/chat', require('./routes/chat'));
 
-// Serve the built React app when running in production
-if (process.env.NODE_ENV === 'production') {
-  const dist = path.join(__dirname, '../client/dist');
-  app.use(express.static(dist));
-  app.get('*', (req, res) => res.sendFile(path.join(dist, 'index.html')));
-}
+// 🛡️ REMOVED THE BREAKING CLIENT FILE ROUTING FROM HERE
 
 app.use((err, req, res, next) => {
   console.error(err);
